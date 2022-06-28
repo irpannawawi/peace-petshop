@@ -39,6 +39,7 @@ class StafController extends Controller
 
             if($staf->save()){
                 $userData['kd_staf'] = $staf->kd_staf;
+                $userData['password'] = Hash::make($userData['password']);
                 $user = User::insert($userData);
                 if($user){
                     return redirect('/staf')->with('msg', 'Berhasil tambah staf');
