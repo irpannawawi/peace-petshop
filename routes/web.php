@@ -49,7 +49,7 @@ Route::middleware(['role:customer'])->group(function(){
 
 
 // ADMIN ROUTING
-Route::middleware('role:admin')->group(function(){
+Route::middleware('role:admin,staf,owner')->group(function(){
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
     // master data user

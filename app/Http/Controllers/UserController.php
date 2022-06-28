@@ -26,6 +26,7 @@ class UserController extends Controller
         if($userData['password'] !== $request->input('confirm_password')){
             return redirect('/admin/pengguna')->with('err-msg', 'password tidak cocok')->withInput();
         }else{
+            $userData['password'] = Hash::make($userData['password']);
             User::insert($userData);
             return redirect('admin/pengguna')->with('msg', 'Berhasil tambah pengguna');
         }

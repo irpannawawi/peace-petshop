@@ -10,7 +10,7 @@ class LaporanController extends Controller
     //
     public function laporan_transaksi(Request $request)
     {
-        $tgl = date('d-m-Y');
+        $tgl = null;
         $data['transaksi'] = Transaksi::where('tanggal', 'LIKE', '%'.$tgl.'%')->get();
         
         return view('admin.laporan', $data);

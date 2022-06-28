@@ -49,7 +49,7 @@
             <span>Beranda</span></a>
             </li>
             <li class="nav-item">
-                @if (Auth::user()->role == 'admin')
+                @if (Auth::user()->role == 'admin' OR Auth::user()->role == 'owner')
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder-open"></i>
@@ -65,6 +65,7 @@
                 </div>
                 @endif
             </li>
+            @if (in_array(Auth::user()->role, array('admin', 'staf'))) 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1"
                     aria-expanded="true" aria-controls="collapsePages1">
@@ -79,6 +80,8 @@
                     </div>
                 </div>
             </li>
+            @endif
+            @if (in_array(Auth::user()->role, array('admin', 'owner'))) 
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
@@ -99,7 +102,7 @@
                     </a>
                 </div>
             </li>
-
+            @endif
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
