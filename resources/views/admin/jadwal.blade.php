@@ -1,12 +1,8 @@
 @extends('layouts.layout')
 @section('content') 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
- <h1 class="h3 mb-0 text-gray-800">Data Pengguna</h1>
-</div><hr>
-<div class="card-header py-3" align="right">
- <button class="btn btn-primary btn-sm btn-flat" data-toggle="modal" data-target="#modal-add"><i
-     class="fa fa-plus"></i>Tambah</button>
- </div>
+ <h1 class="h3 mb-0 text-gray-800">Jadwal Grooming</h1>
+</div>
  @if (session('msg'))
     <div class="alert alert-success">
         {{ session('msg') }}
@@ -17,7 +13,8 @@
         {{ session('err-msg') }}
     </div>
 @endif
- <div class="d-sm-flex align-items-center justify-content-between mb-4">
+<div class="card">
+     <div class="d-sm-flex align-items-center justify-content-between mb-4">
      <div class="card-body">
          <div class="table-responsive">
              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -28,7 +25,6 @@
                          <th width="25%">Nama</th>
                          <th width="20%">Tanggal</th>
                          <th width="15%">Status</th>
-                         <th width="20%">Aksi</th>
                      </tr>
                  </thead>
                  <tbody>
@@ -37,19 +33,27 @@
                     @endphp
                     @foreach ($jadwal as $row)
                     <tr>
-                     <td>{{$n++}}</td>
-                     <td>{{$row->transaksi->invoice}}</td>
-                     <td>{{$row->customer->nama_cust}}</td>
-                     <td>{{$row->tanggal}}</td>
-                     <td>{{$row->status}}</td>
-                     <td>{{$row->status}}</td>
-                 </tr>
+                        <td>{{$n++}}</td>
+                        <td>{{$row->transaksi->invoice}}</td>
+                        <td>{{$row->customer->nama_cust}}</td>
+                        <td>{{$row->tanggal}}</td>
+                        <td>@if ($row->status == 'selesai')
+                            <span class="badge badge-success">
+                        {{$row->status}}
+                            </span>
+                            @else
+                        Dalam antrian
+                            @endif
+                        </td>
+                    </tr>
                  @endforeach
              </tbody>
          </table>
      </div>
  </div>
 </div>
+</div>
+
 <!-- modal add data-->
 <div class="modal inmodal fade" id="modal-add" tabindex="-1" role="dialog" aria-hidden="true">
  <div class="modal-dialog modal-xs">

@@ -10,6 +10,7 @@ use \App\Http\Controllers\ProdukController;
 use \App\Http\Controllers\PublicController;
 use \App\Http\Controllers\TransaksiController;
 use \App\Http\Controllers\JadwalController;
+use \App\Http\Controllers\LaporanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +50,7 @@ Route::middleware(['role:customer'])->group(function(){
 
 // ADMIN ROUTING
 Route::middleware('role:admin')->group(function(){
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
     // master data user
     Route::get('/admin/pengguna', [UserController::class, 'index']);
@@ -79,7 +80,7 @@ Route::middleware('role:admin')->group(function(){
 
 
     // transaksi
-    Route::get('/a/transaksi', [TransaksiController::class, 'index']);
+    Route::get('/a/transaksi', [TransaksiController::class, 'index'])->name('admin-transaksi');
     Route::get('/terima_pesanan/{invoice}', [TransaksiController::class, 'terima_transaksi']);
     Route::get('/batalkan_pesanan/{invoice}', [TransaksiController::class, 'batalkan_transaksi']);
 
@@ -87,6 +88,7 @@ Route::middleware('role:admin')->group(function(){
     Route::get('/a/jadwal', [JadwalController::class, 'index']);
 
     // laporan
+    Route::get('/a/jadwal', [LaporanController::class, 'index'])->name('laporan');
 });
 
 

@@ -10,7 +10,7 @@ class JadwalController extends Controller
     //
     public function index(Request $request)
     {
-        $data['jadwal'] = Jadwal::orderBy('tanggal', 'desc')->get();
+        $data['jadwal'] = Jadwal::orderBy('status', 'asc')->get();
         return view('admin.jadwal', $data);
     }
 }

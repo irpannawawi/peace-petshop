@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use \App\Models\Transaksi;
 use \App\Models\Jadwal;
@@ -11,7 +11,23 @@ class TransaksiController extends Controller
     //
     public function index(Request $request)
     {
-        $trx = Transaksi::where('status','!=', 'menunggu pembayaran')->distinct()->orderBy('invoice', 'desc')->get(['invoice']);
+        if ($request->input('keywords')) {
+            $words = $request->input('keywords');
+            $trx = Transaksi::where('status','!=', 'menunggu pembayaran')
+            ->whereHas('produk', function(Builder $q) use ($words) {
+                return $q->where('nama_produk', 'LIKE', '%'.$words.'%');
+            })
+            ->orWhereHas('customer', function(Builder $q) use ($words) {
+                return $q->where('nama_cust', 'LIKE', '%'.$words.'%');
+            })
+            ->orWhere('invoice', 'LIKE', '%'.$words.'%')
+            ->distinct()->orderBy('invoice', 'desc')->get();
+        }else{
+            $trx = Transaksi::where('status','!=', 'menunggu pembayaran')->distinct()->orderBy('invoice', 'desc')->get(['invoice']);
+        }
+
+
+        $data = ['invoices'=>[]];
         foreach($trx as $tr)
         {
             $data['invoices'][] = ['invoice'=>$tr->invoice, 'data'=>Transaksi::where('invoice', $tr->invoice)->get(), 'status'=>Transaksi::where('invoice', $tr->invoice)->get()[0]->status];

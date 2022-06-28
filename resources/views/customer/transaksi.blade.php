@@ -16,15 +16,15 @@
 					<div class="btn-group float-right my-auto">
 						@switch ($row['status'])
 							@case ('menunggu pembayaran')
-								<button class="btn btn-secondary" data-toggle="modal" data-target="#bayar-modal" onclick="fill_id('{{$row['invoice']}}')">Bayar</button>
+								<button class="btn btn-secondary"  data-toggle="modal" data-target="#bayar-modal" onclick="fill_id('{{$row['invoice']}}', 'Rp. {{number_format($row['total'], 0, '.',',')}},-')">Bayar</button>
 								<a href="#" class="btn  btn-danger">Batalkan Pesanan</a>
 							@break
 							@case ('pesanan terkirim')
-								<button class="btn btn-success">Pesanan Terkirim, Menunggu pengiriman oleh toko</button>
+								<button class="btn btn-success">Pesanan Terkirim, Menunggu konfirmasi oleh toko</button>
 							@break
 							@case ('pesanan diterima')
 							<button class="btn btn-secondary" disabled>Pesanan diterima dan dalam proses pengiriman</button>
-								<a href="/konfirmasi_penerimaan/{{$row['invoice']}}" onclick="return confirm('pastikan anda telah menerima barang')" class="btn btn-success ">Konfirmasi Barang</a>
+								<a href="/konfirmasi_penerimaan/{{$row['invoice']}}" onclick="return confirm('pastikan anda telah menerima pesanan')" class="btn btn-success ">Konfirmasi Pesanan</a>
 							@break
 							@case ('pesanan dibatalkan')
 								<button class="btn btn-danger">Dibatalkan</button>
@@ -83,7 +83,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Silahkan transfer sejumlah Rp. <span>50000</span> ke nomor rekrning berikut <b><span id="norek">BCA 112521125 An. Jamaludin </span></b></p>
+						<p>Silahkan transfer sejumlah <b><span id="nominalBayar"></span></b> ke nomor rekrning berikut <b><span id="norek">BCA 112521125 An. Jamaludin </span></b></p>
 						<div class="form-group">
 							<label for="">Upload Bukti Pembayaran</label>
 							<input type="file" class="form-control" name="bukti_pembayaran">
@@ -100,9 +100,10 @@
 	</div>
 
 	<script>
-		function fill_id(id)
+		function fill_id(id, total)
 		{
 			$('#idTrx').val(id)
+			$('#nominalBayar').html(total)
 		}
 	</script>
 	@endsection

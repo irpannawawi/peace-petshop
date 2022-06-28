@@ -24,52 +24,87 @@
     </ul>
 </div>
 @endif
+<div class="d-flex flex-row-reverse">
+<div class="search-box p-2 mx-3">
+    <form action="{{route('admin-transaksi')}}" method="GET">
+        @csrf
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="search" name="keywords">
+          <div class="input-group-append">
+            <button type="submit" class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+    </form>
+</div> 
+</div>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
  <div class="card-body">
-     
                 @php
                 $total=0;
                 @endphp
                 @foreach ($invoices as $row)
                 <div class="card mb-3">
                     <div class="card-header bg-dark text-white">
-                        <p class="float-left">{{$row['invoice']}}</p>
+                        <h5 class="float-left">{{$row['invoice']}} @if ($row['status'] == 'pesanan terkirim')<span class="badge badge-danger">New</span>@endif</h5>
 
-                    <div class="btn-group float-right my-auto">
+                    <div class="float-right my-auto row">
                         @switch ($row['status'])
                         @case ('pesanan terkirim')
-                            <a href="/terima_pesanan/{{$row['invoice']}}" class="btn btn-primary ">Proses Pesanan</a>
-                            <button class="btn btn-secondary" data-toggle="modal" data-target="#bukti" onclick="fill_image('{{asset('bukti_pembayaran/'.$row['data'][0]->bukti_pembayaran)}}')">Lihat bukti pembayaran</button>
-                            <a href="/batalkan_pesanan/{{$row['invoice']}}" class="btn  btn-danger">Batalkan</a>
+                        <div class="dropdown">
+                            <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Proses
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="/terima_pesanan/{{$row['invoice']}}" class="dropdown-item">Proses Pesanan</a>
+                                <button class="dropdown-item" data-toggle="modal" data-target="#bukti" onclick="fill_image('{{asset('bukti_pembayaran/'.$row['data'][0]->bukti_pembayaran)}}')">Lihat bukti pembayaran</button>
+                                <div class="dropdown-divider"></div>
+                                <a href="/batalkan_pesanan/{{$row['invoice']}}" onclick="return confirm('Batalkan pesanan?')" class="dropdown-item text-danger">Batalkan</a>
+                            </div>
+                        </div>
                             @break
                         @case ('pesanan diterima')
                             <a href="#" class="btn text-dark btn-warning ">Menunggu Konfirmasi Pelanggan</a>
                             @break
                         @case ('pesanan dibatalkan')
-                            <button class="btn btn-danger">Dibatalkan</button>
+                            <button class="btn btn-danger col-sm-12">Dibatalkan</button>
                         @break
                         @default
                             <button class="btn btn-success">Selesai</button>
-
                         @endswitch
                     </div>
                     </div>
                     <div class="card-body">
-                        <span class="float-right"><small>
+
+                        <p class="float-right mb-2"><small>
                             Pengguna : {{$row['data'][0]->customer->nama_cust}} 
-                            Tanggal : {{$row['data'][0]->tanggal}}</small></span>
+                            Tanggal : {{$row['data'][0]->tanggal}}</small> | 
+                            @if ($row['status'] == 'pesanan terkirim' OR $row['status'] == 'pesanan diterima')
+                            <button class="btn btn-default btn-md">
+                                <i class="fa fa-print"> Print resi</i>
+                            </button>
+                            @endif
+                        </p>
+                            <br>
                         <ol class="mt-2">
+                            <table class="table table-borderless">
+                            @php
+                                $n = 1;
+                            @endphp
                             @foreach ($row['data'] as $prd) 
-                            <li>
-                                <b>{{$prd->produk->nama_produk}}</b>
-                                <p>{{$prd->produk->deskripsi}}
-                                <span class="float-right">{{$prd->qty}} x Rp. {{number_format($prd->harga_satuan, 0, '.',',')}},-</span>
-                                    <hr/>
-                            </li>
+                                <tr>
+                                    <th>{{$n++.'. '.$prd->produk->nama_produk}}</th>
+                                    <td rowspan="2" nowrap class="text-right">{{$prd->qty}} x Rp. {{number_format($prd->harga_satuan, 0, '.',',')}},-</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5">
+                                        {{$prd->produk->deskripsi}}
+                                    </td>
+                                </tr>
                             @php
                             $total += $prd->qty*$prd->harga_satuan;
                             @endphp
                             @endforeach
+                            </table>
                             </ol>
 
                     <table class="table table-no-border">
@@ -89,7 +124,7 @@
  <div class="modal-dialog modal-xs">
      <div class="modal-content">
          <div class="modal-header">
-             <h4 class="modal-title">Tambah Data Staf</h4>
+             <h4 class="modal-title">Bukti pembayaran</h4>
          </div>
          <div class="modal-body">
             <img src="" alt="" id="imgBukti" class="img img-fluid">
@@ -101,55 +136,6 @@
 </div>
 </div>
 
-<!-- modal edit data-->
-<div class="modal inmodal fade" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
- <div class="modal-dialog modal-xs">
-  <div class="modal-content">
-     <form name="frm_add" id="frm_add" class="form-horizontal" action="/produk/update" method="POST"
-     enctype="multipart/form-data">
-     @csrf
-     <input type="text" name="id_produk" id="idEdit" hidden>
-     <div class="modal-header">
-        <h4 class="modal-title">Edit Data Produk</h4>
-     </div>
-     <div class="modal-body">
-         <div class="form-group">
-                <label class="control-label">Nama Produk</label>
-                <input type="text" name="nama_produk" id="nama_produk" required
-                class="form-control" autocomplete="off" value="{{old('nama_produk')}}">
-            </div>
-            <div class="form-group">
-                <label class="control-label">Deskripsi</label>
-                <textarea name="deskripsi" id="deskripsi" class="form-control">{{old('deskripsi')}}</textarea>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label">Foto</label>
-                <input type="file" name="foto" id="foto" 
-                class="form-control" value="{{old('foto')}}">
-            </div>
-            <div class="form-group">
-                <label class="control-label">Kategori</label>
-                <select name="kategori" id="kategori" class="form-control">
-                    <option value="" disabled>--Pilih Kategori--</option>
-                    <option value="Makanan">Makanan</option>
-                    <option value="Perawatan Hewan">Perawatan Hewan</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Harga</label>
-                <input type="number" name="harga" id="harga" 
-                class="form-control" value="{{old('harga')}}">
-            </div>
-    </div>
-    <div class="modal-footer">
-     <button type="button" class="btn btn-light" data-dismiss="modal">Tutup</button>
-     <button type="submit" class="btn btn-primary">Simpan</button>
- </div>
-</form>
-</div>
-</div>
-</div>
 @endsection
 
 <script>

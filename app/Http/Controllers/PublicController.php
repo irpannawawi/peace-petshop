@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Db;
 use App\Models\Keranjang;
 use App\Models\Transaksi;
+use App\Models\Jadwal;
 use App\Models\Produk;
 use App\Models\User;
 
@@ -82,7 +84,6 @@ class PublicController extends Controller
                 'bukti_pembayaran' =>'',
                 'status' =>  'menunggu pembayaran'
             ];
-
             Transaksi::insert($dataTransaksi);
             
         }
@@ -96,7 +97,10 @@ class PublicController extends Controller
         $trx = Transaksi::where('kd_cust', $kd_cust)->distinct()->orderBy('invoice', 'desc')->get(['invoice']);
         foreach($trx as $tr)
         {
-            $data['invoices'][$tr->invoice] = ['invoice'=>$tr->invoice, 'data'=>Transaksi::where('invoice', $tr->invoice)->get(), 'status'=>Transaksi::where('invoice', $tr->invoice)->get()[0]->status];
+            $total_per_item = Transaksi::where('invoice', $tr->invoice)
+                        ->select(Db::raw('transaksi.harga_satuan * transaksi.qty as total_harga'))
+                        ->get();
+            $data['invoices'][$tr->invoice] = ['invoice'=>$tr->invoice, 'total'=>$total_per_item->sum('total_harga'), 'data'=>Transaksi::where('invoice', $tr->invoice)->get(), 'status'=>Transaksi::where('invoice', $tr->invoice)->get()[0]->status];
         }
         return view('customer.transaksi', $data);
     }
@@ -116,6 +120,13 @@ class PublicController extends Controller
     }    
     public function konfirmasi_transaksi(Request $request, $invoice)
     {
+        // cek jika di invoice terdapat grooming
+        $transaksi = Transaksi::where('invoice', $invoice)->get();
+        foreach ($transaksi as $trx)
+        {
+            Jadwal::where('kd_transaksi', $trx->kd_transaksi)->update(['status'=>'selesai']);
+        }
+
         if(Transaksi::where('invoice', $invoice)->update(['status'=> 'selesai'])){
             return redirect('/transaksi')->with('msg', 'Berhasil upload bukti pembayaran');
         }else{

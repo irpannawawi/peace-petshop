@@ -118,7 +118,7 @@
                     <a class="dropdown-item text-danger" href="{{route('logout')}}">Logout</a>
                   </div>
                 </div> | 
-                <a href="{{route('keranjang')}}" class="px-3"><i class="fa fa-shopping-cart"></i> {{ isset($count_keranjang)?$count_keranjang:0}}</a>
+                <a href="{{route('keranjang')}}" class="px-3"><i class="fa fa-shopping-cart"></i></a>
                 @endif
             </div>
         </nav>

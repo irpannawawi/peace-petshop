@@ -44,7 +44,7 @@
             <hr class="sidebar-divider">
             <hr class="sidebar-divider">
             <li class="nav-item">
-            <a class="nav-link" href="{{ route('home') }}">
+            <a class="nav-link" href="{{ route('dashboard') }}">
             <i class="fas fa-fw fa-home"></i>
             <span>Beranda</span></a>
             </li>
@@ -82,7 +82,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{route('laporan')}}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Laporan</span></a>
             </li>
