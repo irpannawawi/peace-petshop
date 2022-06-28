@@ -82,9 +82,22 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="{{route('laporan')}}">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Laporan</span></a>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages3"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder-open"></i>
+                    <span>Laporan</span>
+                </a>
+                <div id="collapsePages3" class="collapse" aria-labelledby="headingPages"
+                    data-parent="#accordionSidebar">
+                    <a class="nav-link" href="{{route('laporan')}}">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Laporan Transaksi</span>
+                    </a>
+                    <a class="nav-link" href="{{route('laporan-penjualan')}}">
+                        <i class="fas fa-fw fa-chart-line"></i>
+                        <span>Laporan Penjualan</span>
+                    </a>
+                </div>
             </li>
 
             <!-- Divider -->

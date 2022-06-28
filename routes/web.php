@@ -88,7 +88,8 @@ Route::middleware('role:admin')->group(function(){
     Route::get('/a/jadwal', [JadwalController::class, 'index']);
 
     // laporan
-    Route::get('/a/jadwal', [LaporanController::class, 'index'])->name('laporan');
+    Route::get('/a/laporan_transaksi', [LaporanController::class, 'laporan_transaksi'])->name('laporan');
+    Route::get('/a/laporan_penjualan', [LaporanController::class, 'laporan_penjualan'])->name('laporan-penjualan');
 });
 
 
