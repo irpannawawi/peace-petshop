@@ -65,7 +65,7 @@
                 </div>
                 @endif
             </li>
-            @if (in_array(Auth::user()->role, array('admin', 'staf'))) 
+            @if (in_array(Auth::user()->role, array('staf'))) 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1"
                     aria-expanded="true" aria-controls="collapsePages1">

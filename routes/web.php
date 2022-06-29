@@ -26,6 +26,7 @@ use \App\Http\Controllers\LaporanController;
 // PUBLIC GUEST ROUTING  
 Route::get('/', [PublicController::class, 'index']);
 Route::get('/p/produk', [PublicController::class, 'produk_view']);
+
 // AUTH ROUTING
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/act_login', [AuthController::class, 'authenticate'])->name('act_login');
@@ -90,6 +91,11 @@ Route::middleware('role:admin,staf,owner')->group(function(){
     // laporan
     Route::get('/a/laporan_transaksi', [LaporanController::class, 'laporan_transaksi'])->name('laporan');
     Route::get('/a/laporan_penjualan', [LaporanController::class, 'laporan_penjualan'])->name('laporan-penjualan');
+
+    // print
+    Route::get('/print/laporan_transaksi', [LaporanController::class, 'print_laporan_transaksi'])->name('print-laporan-transaksi');
+    Route::get('/print/laporan_penjualan', [LaporanController::class, 'print_laporan_penjualan'])->name('print-laporan-penjualan');
+
 });
 
 

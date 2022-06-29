@@ -37,6 +37,7 @@ class CustomerController extends Controller
 
             if($cust->save()){
                 $userData['kd_cust'] = $cust->kd_cust;
+                $userData['password'] = Hash::make($request->input('password'));
                 $user = User::insert($userData);
                 if($user){
                     return redirect('/customer')->with('msg', 'Berhasil tambah Customer');
