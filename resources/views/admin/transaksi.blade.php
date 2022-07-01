@@ -82,7 +82,7 @@
                             Pengguna : {{$row['data'][0]->customer->nama_cust}} 
                             Tanggal : {{$row['data'][0]->tanggal}}</small> | 
                             <a class="btn btn-default btn-md" target="__blank" href="{{route('print-resi', ['invoice'=>$row['invoice']])}}">
-                                <i class="fa fa-print"> Print resi</i>
+                                <i class="fa fa-print"> Print invoice</i>
                             </a>
                         </p>
                             <br>
