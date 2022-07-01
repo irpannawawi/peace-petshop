@@ -124,4 +124,10 @@ class LaporanController extends Controller
         return $pdf->stream();
     }
 
+    public function print_resi(Request $request, $invoice)
+    {
+        $data['dataTransaksi'] = Transaksi::where('invoice', $invoice)->get();
+        $pdf = PDF::loadView('pdf.resi', $data)->setPaper('a4', 'potrait');
+        return $pdf->stream();
+    }
 }

@@ -96,6 +96,8 @@ Route::middleware('role:admin,staf,owner')->group(function(){
     Route::get('/print/laporan_transaksi', [LaporanController::class, 'print_laporan_transaksi'])->name('print-laporan-transaksi');
     Route::get('/print/laporan_penjualan', [LaporanController::class, 'print_laporan_penjualan'])->name('print-laporan-penjualan');
 
+    Route::get('/print/resi/{invoice}', [LaporanController::class, 'print_resi'])->name('print-resi');
+
 });
 
 

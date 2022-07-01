@@ -64,12 +64,15 @@
                             @break
                         @case ('pesanan diterima')
                             <a href="#" class="btn text-dark btn-warning ">Menunggu Konfirmasi Pelanggan</a>
+                            <button class="btn btn-sm btn-info mx-2" data-toggle="modal" data-target="#bukti" onclick="fill_image('{{asset('bukti_pembayaran/'.$row['data'][0]->bukti_pembayaran)}}')">Lihat bukti pembayaran</button>
                             @break
                         @case ('pesanan dibatalkan')
                             <button class="btn btn-danger col-sm-12">Dibatalkan</button>
+                            <button class="btn btn-sm btn-info mx-2" data-toggle="modal" data-target="#bukti" onclick="fill_image('{{asset('bukti_pembayaran/'.$row['data'][0]->bukti_pembayaran)}}')">Lihat bukti pembayaran</button>
                         @break
                         @default
                             <button class="btn btn-success">Selesai</button>
+                            <button class="btn btn-sm btn-info mx-2" data-toggle="modal" data-target="#bukti" onclick="fill_image('{{asset('bukti_pembayaran/'.$row['data'][0]->bukti_pembayaran)}}')">Lihat bukti pembayaran</button>
                         @endswitch
                     </div>
                     </div>
@@ -78,11 +81,9 @@
                         <p class="float-right mb-2"><small>
                             Pengguna : {{$row['data'][0]->customer->nama_cust}} 
                             Tanggal : {{$row['data'][0]->tanggal}}</small> | 
-                            @if ($row['status'] == 'pesanan terkirim' OR $row['status'] == 'pesanan diterima')
-                            <button class="btn btn-default btn-md">
+                            <a class="btn btn-default btn-md" target="__blank" href="{{route('print-resi', ['invoice'=>$row['invoice']])}}">
                                 <i class="fa fa-print"> Print resi</i>
-                            </button>
-                            @endif
+                            </a>
                         </p>
                             <br>
                         <ol class="mt-2">
