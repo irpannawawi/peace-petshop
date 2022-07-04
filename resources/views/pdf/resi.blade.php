@@ -85,7 +85,10 @@
 
         <tr>
          <td style="text-align:center"><b>TOTAL</b></td>
-         <td style="text-align:right"><b>{{'Rp. '.number_format($row->harga_satuan, 0, '.',',')}}</b></td>
+         <td style="text-align:right"><b>{{'Rp. '.number_format($total, 0, '.',',')}}</b></td>
+         @php
+        $total =0;
+        @endphp
        </tr>
      </table>
    </td>

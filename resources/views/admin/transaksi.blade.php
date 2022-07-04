@@ -112,6 +112,9 @@
                         <tr>
                             <th>Total</th>
                             <th class="text-right">Rp. {{number_format($total, 0, '.', '.')}},-</th>
+                            @php
+                            $total =0;
+                            @endphp
                         </tr>
                     </table>
 
