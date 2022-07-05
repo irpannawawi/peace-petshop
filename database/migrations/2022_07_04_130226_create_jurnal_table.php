@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('jurnal', function (Blueprint $table) {
             $table->increments('id_jurnal')->primary;
-            $table->string('kd_transaksi')->unsigned();
+            $table->string('kd_transaksi', 20);
             $table->string('kode_akun', 20);
             $table->integer('debit');
             $table->integer('kredit');
