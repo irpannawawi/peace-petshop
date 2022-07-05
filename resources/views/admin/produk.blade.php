@@ -40,6 +40,7 @@
                      <th>foto</th>
                      <th>Kategori</th>
                      <th>Harga</th>
+                     <th>Akun</th>
                      <th>Aksi</th>
                  </tr>
              </thead>
@@ -58,9 +59,10 @@
                  </td>
                  <td>{{$row->kategori}}</td>
                  <td>{{$row->harga}}</td>
+                 <td>{{$row->akun->nama_akun}}</td>
                  <td class="btn-group">
                     <button data-toggle="modal" data-target="#modal-edit" 
-                    onclick="fill_edit('{{$row->id_produk}}', '{{$row->nama_produk}}', '{{$row->deskripsi}}', '{{$row->kategori}}', '{{$row->harga}}')"
+                    onclick="fill_edit('{{$row->id_produk}}', '{{$row->nama_produk}}', '{{$row->deskripsi}}', '{{$row->kategori}}', '{{$row->harga}}', '{{$row->kode_akun}}')"
                     class="btn btn-sm btn-success shadow-sm">
                     <i class="fas fa-edit fa-sm text-white-50"></i>Edit Akses
                 </button>
@@ -108,10 +110,21 @@
                     <option value="Perawatan Hewan">Perawatan Hewan</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label class="control-label">Harga</label>
-                <input type="number" name="harga" 
-                class="form-control" value="{{old('harga')}}">
+            <div class="row">
+                <div class="form-group col">
+                    <label class="control-label">Harga</label>
+                    <input type="number" name="harga" 
+                    class="form-control" value="{{old('harga')}}">
+                </div>
+                <div class="form-group col">
+                    <label class="control-label">Akun</label>
+                    <select name="kode_akun" class="form-control">
+                        <option value="" disabled>--Pilih Kategori--</option>
+                        @foreach ($dataAkun as $ak)
+                        <option value="{{$ak->kode_akun}}">{{$ak->nama_akun}}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
@@ -158,10 +171,21 @@
                     <option value="Perawatan Hewan">Perawatan Hewan</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label class="control-label">Harga</label>
-                <input type="number" name="harga" id="harga" 
-                class="form-control" value="{{old('harga')}}">
+            <div class="row">
+                <div class="form-group col">
+                    <label class="control-label">Harga</label>
+                    <input type="number" name="harga" id="harga" 
+                    class="form-control" value="{{old('harga')}}">
+                </div>
+                <div class="form-group col">
+                    <label class="control-label">Akun</label>
+                    <select name="kode_akun" class="form-control" id="kode-akun">
+                        <option value="" disabled>--Pilih Kategori--</option>
+                        @foreach ($dataAkun as $ak)
+                        <option value="{{$ak->kode_akun}}">{{$ak->nama_akun}}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
     </div>
     <div class="modal-footer">
@@ -175,11 +199,12 @@
 @endsection
 
 <script>
-    function fill_edit(id, nama, deskripsi, kategori, harga){
+    function fill_edit(id, nama, deskripsi, kategori, harga, kode_akun){
         $('#idEdit').val(id)
         $('#nama_produk').val(nama)
         $('#deskripsi').val(deskripsi)
         $('#kategori').val(kategori)
         $('#harga').val(harga)
+        $('#kode-akun').val(kode_akun)
     }
 </script>

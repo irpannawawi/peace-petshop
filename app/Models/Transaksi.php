@@ -34,4 +34,8 @@ class Transaksi extends Model
     {
         return $this->hasOne(Customer::class, 'kd_cust', 'kd_cust');
     }
+    public function jurnal()
+    {
+        return $this->hasMany(Jurnal::class, 'kd_transaksi', 'kd_transaksi');
+    }
 }

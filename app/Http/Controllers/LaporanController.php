@@ -5,17 +5,27 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Models\Transaksi;
 use \App\Models\Produk;
+use \App\Models\Jurnal;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class LaporanController extends Controller
 {
-    //
     public function laporan_transaksi(Request $request)
     {
         $tgl = null;
         $data['transaksi'] = Transaksi::where('tanggal', 'LIKE', '%'.$tgl.'%')->where('status', 'selesai')->orderBy('tanggal', 'desc')->get();
         
         return view('admin.laporan', $data);
+    }
+    public function laporan_jurnal(Request $request)
+    {
+        if ($request->input('bln')) {
+            $tgl = $request->input('bln').'-'.$request->input('thn');
+        }else{
+            $tgl = null;
+        }
+        $data['transaksi'] = Transaksi::where('tanggal', 'LIKE', '%'.$tgl.'%')->where('status', 'selesai')->orderBy('tanggal', 'asc')->get();
+        return view('admin.jurnal', $data);
     }
 
     public function laporan_penjualan(Request $request)
@@ -128,6 +138,37 @@ class LaporanController extends Controller
     {
         $data['dataTransaksi'] = Transaksi::where('invoice', $invoice)->get();
         $pdf = PDF::loadView('pdf.resi', $data)->setPaper('a4', 'potrait');
+        return $pdf->stream();
+    }
+
+    public function print_laporan_jurnal(Request $request)
+    {
+        if($request->input('tipe') == 'harian')
+        {
+            $tgl = $request->input('tgl').'-'.$request->input('bln').'-'.$request->input('thn');
+            $data['tgl'] = $tgl;
+
+        }else{
+            $tgl = $request->input('bln').'-'.$request->input('thn');
+            $bulan = [
+                'Januari'   => '01',
+                'Februari'  => '02',
+                'Maret'     => '03',
+                'April'     => '04',
+                'Mei'       => '05',
+                'Juni'      => '06',
+                'Juli'      => '07',
+                'Agustus'   => '08',
+                'September' => '09',
+                'Oktober'   => '10',
+                'November'  => '11', 
+                'Desember'  => '12',
+            ];
+            $data['tgl'] = array_search($request->input('bln'), $bulan).' '.$request->input('thn');
+        }
+        $data['transaksi'] = Transaksi::where('tanggal', 'LIKE', '%'.$tgl.'%')->where('status', 'selesai')->orderBy('tanggal', 'asc')->get();
+        // return view('admin.jurnal', $data);
+        $pdf = PDF::loadView('pdf.jurnal', $data)->setPaper('a4', 'potrait');
         return $pdf->stream();
     }
 }

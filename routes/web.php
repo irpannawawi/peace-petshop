@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\AuthController;
@@ -11,6 +11,7 @@ use \App\Http\Controllers\PublicController;
 use \App\Http\Controllers\TransaksiController;
 use \App\Http\Controllers\JadwalController;
 use \App\Http\Controllers\LaporanController;
+use \App\Http\Controllers\AkunController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +73,12 @@ Route::middleware('role:admin,staf,owner')->group(function(){
     Route::post('/customer/update', [CustomerController::class, 'update_customer'])->name('customer-update');
     Route::get('/customer/delete/{id}', [CustomerController::class, 'delete_customer'])->name('customer-update');
 
+    // master data Akun
+    Route::get('/akun', [AkunController::class, 'index'])->name('akun');
+    Route::post('/akun/insert', [AkunController::class, 'insert_akun'])->name('akun-insert');
+    Route::post('/akun/update', [AkunController::class, 'update_akun'])->name('akun-update');
+    Route::get('/akun/delete/{id}', [AkunController::class, 'delete_akun'])->name('akun-update');
+
 
     // master data produk
     Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
@@ -91,10 +98,12 @@ Route::middleware('role:admin,staf,owner')->group(function(){
     // laporan
     Route::get('/a/laporan_transaksi', [LaporanController::class, 'laporan_transaksi'])->name('laporan');
     Route::get('/a/laporan_penjualan', [LaporanController::class, 'laporan_penjualan'])->name('laporan-penjualan');
+    Route::get('/a/laporan_jurnal', [LaporanController::class, 'laporan_jurnal'])->name('jurnal');
 
     // print
     Route::get('/print/laporan_transaksi', [LaporanController::class, 'print_laporan_transaksi'])->name('print-laporan-transaksi');
     Route::get('/print/laporan_penjualan', [LaporanController::class, 'print_laporan_penjualan'])->name('print-laporan-penjualan');
+    Route::get('/print/laporan_jurnal', [LaporanController::class, 'print_laporan_jurnal'])->name('print-laporan-jurnal');
 
     Route::get('/print/resi/{invoice}', [LaporanController::class, 'print_resi'])->name('print-resi');
 

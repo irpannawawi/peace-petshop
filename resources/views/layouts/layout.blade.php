@@ -60,6 +60,7 @@
                         <a class="collapse-item fas fa-arrow-circle-right" href="/admin/pengguna"> Master User</a>
                         <a class="collapse-item fas fa-arrow-circle-right" href="{{ route('staf') }}"> Data Staf</a>
                         <a class="collapse-item fas fa-arrow-circle-right" href="{{ route('customer') }}"> Data customer</a>
+                        <a class="collapse-item fas fa-arrow-circle-right" href="{{ route('akun') }}"> Data Akun</a>
                         <a class="collapse-item fas fa-arrow-circle-right" href="{{ route('produk') }}"> Data Produk Penjualan</a>
                     </div>
                 </div>
@@ -99,6 +100,10 @@
                     <a class="nav-link" href="{{route('laporan-penjualan')}}">
                         <i class="fas fa-fw fa-chart-line"></i>
                         <span>Laporan Penjualan</span>
+                    </a>
+                    <a class="nav-link" href="{{route('jurnal')}}">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Jurnal</span>
                     </a>
                 </div>
             </li>

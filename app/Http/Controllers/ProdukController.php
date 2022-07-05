@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\Models\Produk;
+use \App\Models\Akun;
 use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
@@ -12,15 +13,17 @@ class ProdukController extends Controller
     public function index()
     {
         $data['dataProduk'] = Produk::get();
+        $data['dataAkun'] = Akun::orderBy('kode_akun', 'asc')->get();
         return view('admin.produk', $data);
     }
 
     public function insert_produk(Request $request){
-        $userData =  $request->validate([
+        $produkData =  $request->validate([
             'nama_produk' => ['required'],
             'deskripsi' => ['required'],
             'kategori' => ['required'],
             'harga' => ['required'],
+            'kode_akun' => ['required'],
         ]);
         
         // upload foto if exist
@@ -29,10 +32,11 @@ class ProdukController extends Controller
             $path = $request->foto->storeAs('foto_produk', $file_name);
         }
         $produk = new Produk;
-        $produk->nama_produk        = $userData['nama_produk'];
-        $produk->deskripsi          = $userData['deskripsi'];
-        $produk->kategori           = $userData['kategori'];
-        $produk->harga              = $userData['harga'];
+        $produk->nama_produk        = $produkData['nama_produk'];
+        $produk->deskripsi          = $produkData['deskripsi'];
+        $produk->kategori           = $produkData['kategori'];
+        $produk->harga              = $produkData['harga'];
+        $produk->kode_akun          = $produkData['kode_akun'];
         $produk->foto               = $file_name; 
         if($produk->save()){
             return redirect('/produk')->with('msg', 'Berhasil tambah Produk');
@@ -40,19 +44,21 @@ class ProdukController extends Controller
     }
 
     public function update_produk(Request $request){
-        $userData =  $request->validate([
+        $produkData =  $request->validate([
             'nama_produk' => ['required'],
             'deskripsi' => ['required'],
             'kategori' => ['required'],
             'harga' => ['required'],
+            'kode_akun' => ['required'],
         ]);
         
         // upload foto if exist
         $produk = Produk::find($request->input('id_produk'));
-        $produk->nama_produk        = $userData['nama_produk'];
-        $produk->deskripsi          = $userData['deskripsi'];
-        $produk->kategori           = $userData['kategori'];
-        $produk->harga              = $userData['harga'];
+        $produk->nama_produk        = $produkData['nama_produk'];
+        $produk->deskripsi          = $produkData['deskripsi'];
+        $produk->kategori           = $produkData['kategori'];
+        $produk->harga              = $produkData['harga'];
+        $produk->kode_akun          = $produkData['kode_akun'];
 
         if($request->file('foto')){
             // remove old foto 

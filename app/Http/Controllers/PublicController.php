@@ -10,6 +10,8 @@ use App\Models\Transaksi;
 use App\Models\Jadwal;
 use App\Models\Produk;
 use App\Models\User;
+use App\Models\Akun;
+use App\Models\Jurnal;
 
 class PublicController extends Controller
 {
@@ -126,6 +128,30 @@ class PublicController extends Controller
         {
             Jadwal::where('kd_transaksi', $trx->kd_transaksi)->update(['status'=>'selesai']);
         }
+
+        // insert ke jurnal
+        foreach (Transaksi::where('invoice', $invoice)->get() as $key) {
+            $total_transaksi = 0;
+            $total_transaksi += $key->harga_satuan*$key->qty; 
+            // debit 
+            $debit = [
+                'kd_transaksi'=>$key->kd_transaksi,
+                'kode_akun'=>Akun::where('default', 'Kas Masuk')->get()[0]->kode_akun,
+                'debit'=>$total_transaksi,
+                'kredit'=>0
+            ]; 
+            Jurnal::insert($debit);
+
+            // kredit 
+            $kredit = [
+                'kd_transaksi'=>$key->kd_transaksi,
+                'kode_akun'=>Transaksi::where('kd_transaksi', $key->kd_transaksi)->get()[0]->produk->kode_akun,
+                'debit'=>0,
+                'kredit'=>$total_transaksi
+            ]; 
+            Jurnal::insert($kredit);
+        }
+
 
         if(Transaksi::where('invoice', $invoice)->update(['status'=> 'selesai'])){
             return redirect('/transaksi')->with('msg', 'Berhasil upload bukti pembayaran');

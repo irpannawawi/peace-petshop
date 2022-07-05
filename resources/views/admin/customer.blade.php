@@ -64,7 +64,7 @@
                     class="btn btn-sm btn-success shadow-sm">
                     <i class="fas fa-edit fa-sm text-white-50"></i>Edit Akses
                 </button>
-                <a href="/staf/delete/{{ $row->id_user }}" onclick="return confirm('Yakin Ingin menghapus data?')" class="btn btn-sm btn-danger shadow-sm">
+                <a href="/customer/delete/{{ $row->id_user }}" onclick="return confirm('Yakin Ingin menghapus data?')" class="btn btn-sm btn-danger shadow-sm">
                  <i class="fas fa-trash-alt fa-sm text-white-50"></i> Hapus</a>
              </td>
          </tr>

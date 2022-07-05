@@ -18,4 +18,9 @@ class Produk extends Model
         'harga',
     ];
     protected $primaryKey = 'id_produk';
+
+    public function akun()
+    {
+        return $this->hasOne(Akun::class, 'kode_akun', 'kode_akun');
+    }
 }
