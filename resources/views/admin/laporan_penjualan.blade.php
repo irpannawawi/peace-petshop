@@ -76,7 +76,7 @@
                             <input type="text" name="tipe" value="harian" hidden>
                             <select name="tgl" class="form-control">
                                 @for ($n=1; $n<32; $n++)
-                                <option value="{{$n}}" @if ($n == date('d')) selected @endif>{{$n}}</option>
+                                <option value="{{strlen($n)<2?'0'.$n:$n}}" @if ($n == date('d')) selected @endif>{{strlen($n)<2?'0'.$n:$n}}</option>
                                 @endfor
                             </select>
                             <select name="bln" class="form-control">

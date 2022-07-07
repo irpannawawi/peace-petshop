@@ -16,7 +16,7 @@
 					<div class="btn-group float-right my-auto">
 						@switch ($row['status'])
 							@case ('menunggu pembayaran')
-								<button class="btn btn-secondary"  data-toggle="modal" data-target="#bayar-modal" onclick="fill_id('{{$row['invoice']}}', 'Rp. {{number_format($row['total'], 0, '.',',')}},-')">Bayar</button>
+								<button class="btn btn-secondary"  data-toggle="modal" data-target="#bayar-modal" onclick="fill_id('{{$row['invoice']}}', 'Rp. {{number_format($row['total'], 0, '.',',')}},-', '{{$row['data'][0]->pembayaran}}')">Bayar</button>
 								<a href="#" class="btn  btn-danger">Batalkan Pesanan</a>
 							@break
 							@case ('pesanan terkirim')
@@ -83,7 +83,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p>Silahkan transfer sejumlah <b><span id="nominalBayar"></span></b> ke nomor rekrning berikut <b><span id="norek">BCA 112521125 An. Jamaludin </span></b></p>
+						<p>Silahkan transfer sejumlah <b><span id="nominalBayar"></span></b> ke nomor rekening berikut <b><span id="norek"> </span></b></p>
 						<div class="form-group">
 							<label for="">Upload Bukti Pembayaran</label>
 							<input type="file" class="form-control" name="bukti_pembayaran">
@@ -100,10 +100,17 @@
 	</div>
 
 	<script>
-		function fill_id(id, total)
+		function fill_id(id, total, metode)
 		{
 			$('#idTrx').val(id)
 			$('#nominalBayar').html(total)
+			if(metode == 'Bank BCA'){
+				metode += " 11654383 An. Peace Petshop"
+			}else{
+				metode += " 6647867742311 An. Peace Petshop"
+			}
+			console.log(metode)
+			$('#norek').html(metode)
 		}
 	</script>
 	@endsection

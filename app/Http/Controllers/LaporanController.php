@@ -97,7 +97,7 @@ class LaporanController extends Controller
 
         }else{
             $tgl = $request->input('bln').'-'.$request->input('thn');
-            $transaksi= Transaksi::where('tanggal', 'LIKE', '%29-'.$tgl.'%')->distinct()->get(['kd_produk']);
+            $transaksi= Transaksi::where('tanggal', 'LIKE', '%'.$tgl.'%')->distinct()->get(['kd_produk']);
             $bulan = [
                 'Januari'   => '01',
                 'Februari'  => '02',
