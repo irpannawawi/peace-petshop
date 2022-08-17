@@ -23,7 +23,7 @@ class CustomerController extends Controller
             'password' => ['required'],
         ]);
         $userData['role'] = 'customer';
-        
+    
 
         if($userData['password'] !== $request->input('confirm_password')){
             return redirect('/customer')->with('err-msg', 'password tidak cocok')->withInput();
