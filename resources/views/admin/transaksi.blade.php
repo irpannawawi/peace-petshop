@@ -79,7 +79,7 @@
                     <div class="card-body">
 
                         <p class="float-right mb-2"><small>
-                            Pengguna : {{$row['data'][0]->customer->nama_cust}} 
+                            Pengguna : {{$row['data'][0]->customer?$row['data'][0]->customer->nama_cust:'user tidak ditemukan atau sudah dihapus'}} 
                             Tanggal : {{$row['data'][0]->tanggal}}</small> | 
                             <a class="btn btn-default btn-md" target="__blank" href="{{route('print-resi', ['invoice'=>$row['invoice']])}}">
                                 <i class="fa fa-print"> Print invoice</i>
