@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Akun;
+use \App\Models\Produk;
 
 class AkunController extends Controller
 {
@@ -39,10 +40,12 @@ class AkunController extends Controller
             'nama_akun' => ['required']
         ]);
         
-
-       
-            Akun::where('default', '!=', '')->update(['default'=>'']);
-            $akun = Akun::find($request->input('id_akun'));
+        $id = $request->input('id_akun');
+        $kode_akun_lama = Akun::find($id)->kode_akun;
+        Produk::where('kode_akun', $kode_akun_lama)->update(['kode_akun'=>$akunData['kode_akun']]);
+        // dd(Produk::where('kode_akun', $kode_akun_lama)->get());
+        Akun::where('default', '!=', '')->update(['default'=>'']);
+            $akun = Akun::find($id);
             $akun->kode_akun = $akunData['kode_akun'];
             $akun->nama_akun = $akunData['nama_akun'];
             $akun->default = $request->input('default');
