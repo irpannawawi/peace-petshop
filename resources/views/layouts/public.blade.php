@@ -26,6 +26,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/pet-care/css/style.css" rel="stylesheet">
+    
 </head>
 
 <body>

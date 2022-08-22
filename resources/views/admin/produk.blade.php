@@ -1,5 +1,6 @@
 @extends('layouts.layout')
-@section('content') 
+@section('content')
+
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
  <h1 class="h3 mb-0 text-gray-800">Data Produk</h1>
 </div><hr>
@@ -28,8 +29,7 @@
 </div>
 @endif
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
- <div class="card-body">
-     <div class="table-responsive">
+ <div class="card-body table-responsive">
          <table class="table table-bordered" id="dataTable" cellspacing="0">
              <thead>
                  <tr align="center">
@@ -53,7 +53,7 @@
                  <td>{{$n++}}</td>
                  <td>{{$row->id_produk}}</td>
                  <td>{{$row->nama_produk}}</td>
-                 <td>{{$row->deskripsi}}</td>
+                 <td>@php echo $row->deskripsi @endphp</td>
                  <td class="text-center">
                      <img src="{{asset('foto_produk/'.$row->foto)}}" class="img" width="200">
                  </td>
@@ -62,7 +62,7 @@
                  <td>{{$row->akun->nama_akun}}</td>
                  <td class="btn-group">
                     <button data-toggle="modal" data-target="#modal-edit" 
-                    onclick="fill_edit('{{$row->id_produk}}', '{{$row->nama_produk}}', '{!!str_replace("\n", "<br>", $row->deskripsi) !!}', '{{$row->kategori}}', '{{$row->harga}}', '{{$row->kode_akun}}')"
+                    onclick="fill_edit('{{$row->id_produk}}', '{{$row->nama_produk}}', '@php echo $row->deskripsi @endphp', '{{$row->kategori}}', '{{$row->harga}}', '{{$row->kode_akun}}')"
                     class="btn btn-sm btn-success shadow-sm">
                     <i class="fas fa-edit fa-sm text-white-50"></i>Edit Akses
                 </button>
@@ -73,7 +73,6 @@
          @endforeach
      </tbody>
  </table>
-</div>
 </div>
 </div>
 <!-- modal add data-->
@@ -94,7 +93,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Deskripsi</label>
-                <textarea name="deskripsi" class="form-control">{{old('deskripsi')}}</textarea>
+                <textarea name="deskripsi" >{{old('deskripsi')}}</textarea>
             </div>
 
             <div class="form-group">
@@ -155,7 +154,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Deskripsi</label>
-                <textarea name="deskripsi" id="deskripsi" class="form-control">{{old('deskripsi')}}</textarea>
+                <textarea name="deskripsi" id="editor" >{{old('deskripsi')}}</textarea>
             </div>
 
             <div class="form-group">
@@ -196,16 +195,28 @@
 </div>
 </div>
 </div>
-@endsection
+<script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
 
 <script>
+    let descEditor;
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .then(editor => {
+            window.editor = editor;
+            descEditor = editor;
+        })
+        .catch( error => {
+            console.error( error );
+        } );
     function fill_edit(id, nama, deskripsi, kategori, harga, kode_akun){
         console.log('ok')
         $('#idEdit').val(id)
         $('#nama_produk').val(nama)
+        descEditor.setData(deskripsi)
         $('#deskripsi').val(deskripsi)
         $('#kategori').val(kategori)
         $('#harga').val(harga)
         $('#kode-akun').val(kode_akun)
     }
 </script>
+        @endsection
