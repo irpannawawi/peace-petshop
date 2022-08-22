@@ -62,7 +62,7 @@
                  <td>{{$row->akun->nama_akun}}</td>
                  <td class="btn-group">
                     <button data-toggle="modal" data-target="#modal-edit" 
-                    onclick="fill_edit('{{$row->id_produk}}', '{{$row->nama_produk}}', '{{html_entity_decode(str_replace("\n", "<br>", $row->deskripsi))}}', '{{$row->kategori}}', '{{$row->harga}}', '{{$row->kode_akun}}')"
+                    onclick="fill_edit('{{$row->id_produk}}', '{{$row->nama_produk}}', '{!!str_replace("\n", "<br>", $row->deskripsi) !!}', '{{$row->kategori}}', '{{$row->harga}}', '{{$row->kode_akun}}')"
                     class="btn btn-sm btn-success shadow-sm">
                     <i class="fas fa-edit fa-sm text-white-50"></i>Edit Akses
                 </button>
