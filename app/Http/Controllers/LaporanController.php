@@ -37,7 +37,7 @@ class LaporanController extends Controller
         $dataTransaksi = [];
         foreach ($transaksi as $trx){
             $data = Produk::where('id_produk', $trx->kd_produk)->get();
-            $jumlah = Transaksi::where('kd_produk', $trx->kd_produk)->sum('qty');
+            $jumlah = Transaksi::where('status','selesai')->where('kd_produk', $trx->kd_produk)->sum('qty');
             $harga = $data[0]->harga;
             $dataTransaksi[$trx->kd_produk] = [
                 'kd_produk'=> $trx->kd_produk,
