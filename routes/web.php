@@ -44,6 +44,7 @@ Route::middleware(['role:customer'])->group(function(){
     Route::get('/checkout', [PublicController::class, 'checkout'])->name('checkout');
     Route::post('/do_checkout', [PublicController::class, 'do_checkout'])->name('do_checkout');
     Route::get('/transaksi', [PublicController::class, 'transaksi'])->name('transaksi');
+    Route::get('/cancel_transaksi/{inv}', [PublicController::class, 'cancel_transaksi'])->name('cancel-transaksi');
     Route::post('/bayar_transaksi', [PublicController::class, 'transaksi_upload_pembayaran'])->name('bayar-transaksi');
     Route::get('konfirmasi_penerimaan/{invoice}', [PublicController::class, 'konfirmasi_transaksi']);
 });

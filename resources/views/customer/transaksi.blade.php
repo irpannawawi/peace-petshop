@@ -17,7 +17,7 @@
 						@switch ($row['status'])
 							@case ('menunggu pembayaran')
 								<button class="btn btn-secondary"  data-toggle="modal" data-target="#bayar-modal" onclick="fill_id('{{$row['invoice']}}', 'Rp. {{number_format($row['total'], 0, '.',',')}},-', '{{$row['data'][0]->pembayaran}}')">Bayar</button>
-								<a href="#" class="btn  btn-danger">Batalkan Pesanan</a>
+								<a onclick="return confirm('Batalkan pesanan?')" href="{{route('cancel-transaksi', ['inv'=>$row['invoice']])}}" class="btn  btn-danger">Batalkan Pesanan</a>
 							@break
 							@case ('pesanan terkirim')
 								<button class="btn btn-success">Pesanan Terkirim, Menunggu konfirmasi oleh toko</button>

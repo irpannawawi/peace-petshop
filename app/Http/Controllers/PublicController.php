@@ -108,6 +108,13 @@ class PublicController extends Controller
             }
         }
         return view('customer.transaksi', $data);
+    }    
+    
+    public function cancel_transaksi($inv)
+    {
+        $trx = Transaksi::where('invoice', $inv)->delete();
+        
+        return redirect()->route('transaksi');
     }
 
 
