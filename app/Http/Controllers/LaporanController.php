@@ -31,9 +31,10 @@ class LaporanController extends Controller
     public function laporan_penjualan(Request $request)
     {
         $tgl = date('m-Y');
-        $transaksi= Transaksi::distinct()->orderBy('tanggal', 'desc')->get(['kd_produk']);
+        $transaksi= Transaksi::where('status','selesai')->distinct()->orderBy('tanggal', 'desc')->get(['kd_produk']);
         // kode barang  nama barang harga   jumlah  total
         $all_trx = array();
+        $dataTransaksi = [];
         foreach ($transaksi as $trx){
             $data = Produk::where('id_produk', $trx->kd_produk)->get();
             $jumlah = Transaksi::where('kd_produk', $trx->kd_produk)->sum('qty');
