@@ -1,6 +1,9 @@
 /node_modules
 /public/hot
 /storage/*.key
+/public/storage
+/public/bukti_pembayaran
+/public/foto_produk
 /vendor
 .env
 .env.backup

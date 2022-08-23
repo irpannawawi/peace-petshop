@@ -93,12 +93,12 @@ class LaporanController extends Controller
         if($request->input('tipe') == 'harian')
         {
             $tgl = $request->input('tgl').'-'.$request->input('bln').'-'.$request->input('thn');
-            $transaksi= Transaksi::where('tanggal', 'LIKE', '%'.$tgl.'%')->distinct()->get(['kd_produk']);
+            $transaksi= Transaksi::where('status','selesai')->where('tanggal', 'LIKE', '%'.$tgl.'%')->distinct()->get(['kd_produk']);
             $data['tgl'] = $tgl;
 
         }else{
             $tgl = $request->input('bln').'-'.$request->input('thn');
-            $transaksi= Transaksi::where('tanggal', 'LIKE', '%'.$tgl.'%')->distinct()->get(['kd_produk']);
+            $transaksi= Transaksi::where('status','selesai')->where('tanggal', 'LIKE', '%'.$tgl.'%')->distinct()->get(['kd_produk']);
             $bulan = [
                 'Januari'   => '01',
                 'Februari'  => '02',
@@ -119,7 +119,7 @@ class LaporanController extends Controller
         $dataTransaksi = [];
         foreach ($transaksi as $trx){
             $produk       = Produk::where('id_produk', $trx->kd_produk)->get();
-            $jumlah     = Transaksi::where('kd_produk', $trx->kd_produk)->sum('qty');
+            $jumlah     = Transaksi::where('status','selesai')->where('kd_produk', $trx->kd_produk)->sum('qty');
             $harga      = $produk[0]->harga;
             $dataTransaksi[$trx->kd_produk] = [
                 'kd_produk'=> $trx->kd_produk,
