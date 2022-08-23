@@ -164,7 +164,7 @@ class PublicController extends Controller
 
 
         if(Transaksi::where('invoice', $invoice)->update(['status'=> 'selesai'])){
-            return redirect('/transaksi')->with('msg', 'Berhasil upload bukti pembayaran');
+            return redirect('/transaksi')->with('msg', 'Transaksi Selesai');
         }else{
             return redirect('/transaksi')->with('msg-danger', 'gagal');
         }
