@@ -34,8 +34,8 @@
                     @foreach ($jadwal as $row)
                     <tr>
                         <td>{{$n++}}</td>
-                        <td>{{$row->transaksi->invoice}}</td>
-                        <td>{{$row->customer->nama_cust}}</td>
+                        <td>{{$row->transaksi?$row->transaksi->invoice:''}}</td>
+                        <td>{{$row->customer?$row->customer->nama_cust:''}}</td>
                         <td>{{$row->tanggal}}</td>
                         <td>@if ($row->status == 'selesai')
                             <span class="badge badge-success">
