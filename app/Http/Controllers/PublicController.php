@@ -12,6 +12,7 @@ use App\Models\Produk;
 use App\Models\User;
 use App\Models\Akun;
 use App\Models\Jurnal;
+use App\Models\Diskon;
 
 class PublicController extends Controller
 {
@@ -29,11 +30,7 @@ class PublicController extends Controller
     public function keranjang(Request $request)
     {
         $data['keranjang'] = Keranjang::where('kd_cust', Auth::user()->customer->kd_cust)->get();
-        $data['total_bayar'] = 0;
-        foreach ($data['keranjang'] as $row)
-        {
-            $data['total_bayar'] += $row->qty*$row->produk->harga;
-        }
+        $data['diskon'] = Diskon::where('deleted', 0)->orderBy('min_belanja', 'asc')->get();
         return view('customer.keranjang', $data);
     }
 
@@ -62,6 +59,7 @@ class PublicController extends Controller
     public function checkout(Request $request)
     {
         $kd_cust = User::find(Auth::user()->id_user)->customer->kd_cust;
+        $data['diskon'] = Diskon::where('deleted', 0)->orderBy('min_belanja', 'asc')->get();
         $data['keranjang'] = Keranjang::where('kd_cust', $kd_cust)->get();
         $data['user'] = User::find(Auth::user()->id_user);
         return view('customer.checkout', $data);
@@ -72,20 +70,48 @@ class PublicController extends Controller
         $invoice   = 'BUY-'.date('dmYHis');
         $kd_cust = User::find(Auth::user()->id_user)->customer->kd_cust;
         $keranjang = Keranjang::where('kd_cust', $kd_cust)->get();
+        $diskon = Diskon::where('deleted', 0)->orderBy('min_belanja', 'asc')->get();
+
         foreach ($keranjang as $row)
         {
+
+            // cek diskon
+            $has_diskon = null;
+            $harga_satuan = 0;
+            foreach($diskon as $ds){
+                if($row->qty >= $ds->min_belanja){
+                    $has_diskon = $ds->id_diskon;
+                    break;
+                }
+            }
+
+            if($has_diskon){
+                $disc = Diskon::find($has_diskon);
+                if($disc->nominal==null){
+                    $harga_satuan = $row->produk->harga-($row->produk->harga*$disc->persen/100);
+                }else{
+                    $harga_satuan = $row->produk->harga-$disc->nominal;
+                    if($harga_satuan<1)$harga_satuan=0;
+                }
+            }else{
+                $harga_satuan = $row->produk->harga;
+            }
+
+
             $dataTransaksi = [
                 'invoice' => $invoice,
                 'kd_cust' => $row->kd_cust,
                 'kd_produk' => $row->kd_produk,
-                'harga_satuan' => $row->produk->harga,
+                'harga_satuan' => $harga_satuan,
                 'qty' => $row->qty,
                 'tanggal' => date('d-m-Y H:i:s'),
                 'pengiriman' =>  $request->input('pengiriman'),
                 'pembayaran' => $request->input('pembayaran'),
                 'bukti_pembayaran' =>'',
-                'status' =>  'menunggu pembayaran'
+                'status' =>  'menunggu pembayaran',
+                'diskon' => $has_diskon,
             ];
+            
             Transaksi::insert($dataTransaksi);
             
         }

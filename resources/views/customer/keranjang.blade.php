@@ -1,5 +1,8 @@
 @extends('layouts.public')
 @section('content')
+@php
+$total_bayar=0;
+@endphp
 <div class="container p-5">
 		<h1>Keranjang</h1>
 	<div class="row">
@@ -32,11 +35,41 @@
 					</td>
 
 					@php
+						$disc=0;
+						$disc_type=null;
+						$has_disc = false;
 						$harga_pcs = $row->produk->harga;
-						if($row->qty > )
+						foreach($diskon as $ds ){
+							if($row->qty >= $ds->min_belanja){
+								$disc = $ds->nominal==null?$ds->persen:$ds->nominal;
+								$disc_type = $ds->nominal==null?'persen':'nominal';
+								$has_disc = true;
+
+								$harga_pcs = $disc_type=='persen'?$harga_pcs-($harga_pcs*$ds->persen/100):$harga_pcs-$ds->nominal;
+								if($harga_pcs <1 )$harga_pcs=0;
+								break;
+							}
+						}
 						$total_harga_produk = $harga_pcs*$row->qty;
+						$total_bayar += $total_harga_produk;
 					@endphp
-					<td><b>Rp. {{number_format($total_harga_produk, 0, '.',',')}},-</b> <small>({{$row->qty.'x'.number_format($row->produk->harga, 0, '.',',')}})</small> <a href="{{route('keranjang-delete-barang', ['id'=>$row->kd_keranjang])}}"><i class="fa fa-times"></i></a></td>
+					<td><b>Rp. {{number_format($total_harga_produk, 0, '.',',')}},-</b> 
+						<small>
+							(
+								{{$row->qty}} x 
+						@if($has_disc == true)
+						<s>
+						@endif 
+								{{number_format($row->produk->harga, 0, '.',',')}}
+						@if($has_disc == true)
+						</s>
+						@endif
+						@if($has_disc == true)
+								{{number_format($harga_pcs, 0, '.',',')}}
+						@endif
+							)
+						</small> 
+						<a href="{{route('keranjang-delete-barang', ['id'=>$row->kd_keranjang])}}"><i class="fa fa-times"></i></a></td>
 				</tr>
 				@endforeach
 				<tr>
