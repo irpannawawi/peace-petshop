@@ -21,7 +21,7 @@
 					<td>
 							{{$row->qty}}
 					</td>
-					<td><b>Rp. {{number_format($row->produk->harga*$row->qty, 0, '.',',')}},-</b> <small>({{$row->qty.'x'.number_format($row->produk->harga, 0, '.',',')}})</small> <a href="{{route('keranjang-delete-barang', ['id'=>$row->kd_keranjang])}}"><i class="fa fa-times"></i></a></td>
+					<td><b>Rp. {{number_format($row->produk->harga*$row->qty+($row->produk->harga*$row->qty*11/100), 0, '.',',')}},-</b> <small>({{$row->qty.'x'.number_format($row->produk->harga, 0, '.',',')}} + PPN 11%)</small> <a href="{{route('keranjang-delete-barang', ['id'=>$row->kd_keranjang])}}"><i class="fa fa-times"></i></a></td>
 				</tr>
 				@endforeach
 			</table>

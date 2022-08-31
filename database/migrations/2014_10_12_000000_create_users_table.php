@@ -18,9 +18,8 @@ return new class extends Migration
             $table->string('nama');
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('role', ['admin', 'staf', 'owner', 'customer']);
+            $table->enum('role', ['admin', 'owner', 'customer']);
             $table->integer('kd_cust')->nullable();
-            $table->integer('kd_staf')->nullable();
         });
     }
 

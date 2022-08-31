@@ -74,11 +74,11 @@
       <td>{{$row['kd_produk']}}</td>
       <td>{{$row['nama_produk']}}</td>
       <td>{{$row['jumlah']}}</td>
-      <td>Rp. {{number_format($row['harga'], 0, '.',',')}},-</td>
-      <td>Rp. {{number_format($row['total'], 0, '.',',')}},-</td>
+      <td>Rp. {{number_format($row['harga'], 0, '.',',')}},- (+ PPN 11% Rp. {{number_format($row['harga']*11/100, 0, '.',',')}},-)</td>
+      <td>Rp. {{number_format($row['total']+($row['total']*11/100), 0, '.',',')}},-</td>
    </tr>
    @php 
-   $total+=$row['total'];
+   $total+=$row['total']+($row['total']*11/100);
    @endphp
    @endforeach
    <tr>

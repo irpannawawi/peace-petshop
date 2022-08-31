@@ -47,15 +47,12 @@
 							<p>{{$prd->produk->deskripsi}}</p>
 								<hr/>
 							</li>
-							@php
-							$total += $prd->qty*$prd->harga_satuan;
-							@endphp
 							@endforeach
 						</ol>
 						<table class="table table-no-border">
 							<tr>
 								<th>Total</th>
-								<th class="text-right">Rp. {{number_format($total, 0, '.', '.')}},-</th>
+								<th class="text-right">Rp. {{number_format($row['total'], 0, '.', '.')}},- <small>(Termasuk PPN 11%)</small></th>
 							</tr>
 						</table>
 					</div>

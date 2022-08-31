@@ -30,12 +30,20 @@
 							{{$row->qty}}
 						@endif
 					</td>
-					<td><b>Rp. {{number_format($row->produk->harga*$row->qty, 0, '.',',')}},-</b> <small>({{$row->qty.'x'.number_format($row->produk->harga, 0, '.',',')}})</small> <a href="{{route('keranjang-delete-barang', ['id'=>$row->kd_keranjang])}}"><i class="fa fa-times"></i></a></td>
+
+					@php
+						$harga_pcs = $row->produk->harga;
+						if($row->qty > )
+						$total_harga_produk = $harga_pcs*$row->qty;
+					@endphp
+					<td><b>Rp. {{number_format($total_harga_produk, 0, '.',',')}},-</b> <small>({{$row->qty.'x'.number_format($row->produk->harga, 0, '.',',')}})</small> <a href="{{route('keranjang-delete-barang', ['id'=>$row->kd_keranjang])}}"><i class="fa fa-times"></i></a></td>
 				</tr>
 				@endforeach
 				<tr>
 					<th colspan="3">Jumlah</th>
-					<th>Rp. {{number_format($total_bayar, 0, '.',',')}},-</th>
+					<th>Rp. {{number_format($total_bayar+($total_bayar*11/100), 0, '.',',')}},- <small>(PPN 11%)</small> 
+
+					</th>
 				</tr>
 			</table>
 			<a class="btn btn-primary float-right" href="{{route('checkout')}}">Checkout</a>

@@ -111,7 +111,7 @@
                     <table class="table table-no-border">
                         <tr>
                             <th>Total</th>
-                            <th class="text-right">Rp. {{number_format($total, 0, '.', '.')}},-</th>
+                            <th class="text-right">Rp. {{number_format($total+($total*11/100), 0, '.', '.')}},- <small>(Termasuk PPN 11% | {{number_format($total*11/100, 0, '.', ',')}})</small></th>
                             @php
                             $total =0;
                             @endphp

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->enum('pembayaran',['Bank BCA', 'Bank Mandiri']);
             $table->string('bukti_pembayaran', 100);
             $table->enum('status', ['menunggu pembayaran', 'pesanan terkirim', 'pesanan diterima', 'pesanan dibatalkan', 'selesai']);
+            $table->integer('diskon')->default(0)->nullable();
         });
     }
 

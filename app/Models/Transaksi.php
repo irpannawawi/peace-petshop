@@ -21,10 +21,16 @@ class Transaksi extends Model
         'bukti_pembayaran',    
         'status',  
         'pengiriman',  
+        'diskon',  
 
     ];
     protected $primaryKey = 'kd_transaksi';
 
+    public function diskon()
+    {
+        return $this->hasOne(Diskon::class, 'diskon', 'id_diskon');
+    }
+    
     public function produk()
     {
         return $this->hasOne(Produk::class, 'id_produk', 'kd_produk');

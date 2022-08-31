@@ -102,9 +102,14 @@ class PublicController extends Controller
             foreach($trx as $tr)
             {
                 $total_per_item = Transaksi::where('invoice', $tr->invoice)
-                ->select(Db::raw('transaksi.harga_satuan * transaksi.qty as total_harga'))
+                ->select(Db::raw('transaksi.harga_satuan * transaksi.qty + (transaksi.harga_satuan * transaksi.qty * 11 / 100)  as total_harga'))
                 ->get();
-                $data['invoices'][$tr->invoice] = ['invoice'=>$tr->invoice, 'total'=>$total_per_item->sum('total_harga'), 'data'=>Transaksi::where('invoice', $tr->invoice)->get(), 'status'=>Transaksi::where('invoice', $tr->invoice)->get()[0]->status];
+                $data['invoices'][$tr->invoice] = [
+                    'invoice'=>$tr->invoice, 
+                    'total'=>$total_per_item->sum('total_harga'), 
+                    'data'=>Transaksi::where('invoice', $tr->invoice)->get(), 
+                    'status'=>Transaksi::where('invoice', $tr->invoice)->get()[0]->status
+                ];
             }
         }
         return view('customer.transaksi', $data);

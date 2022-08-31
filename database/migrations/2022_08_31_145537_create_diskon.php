@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('staf', function (Blueprint $table) {
-            $table->increments('kd_staf')->primary;
-            $table->string('nama_staf', 50);
-            $table->string('ttl', 50);
-            $table->enum('jk', ['Laki-laki', 'Perempuan']);
-            $table->text('alamat');
-            $table->string('no_tlp', 15);
-
+        Schema::create('diskon', function (Blueprint $table) {
+            $table->increments('id_diskon')->primary;
+            $table->string('keterangan', 225);
+            $table->integer('min_belanja');
+            $table->integer('nominal')->nullable();
+            $table->integer('persen')->nullable();
+            $table->boolean('deleted')->default(false);
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('staf');
+        Schema::dropIfExists('diskon');
     }
 };

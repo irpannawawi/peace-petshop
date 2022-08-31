@@ -72,8 +72,8 @@
                     @foreach($row->jurnal as $jr)
                     <tr>
                         <td style="padding-left:30px;">{{$jr->akun->nama_akun}}</td>
-                        <td>Rp. {{number_format($jr->debit, 0, '.',',')}},-</td>
-                        <td>Rp. {{number_format($jr->kredit, 0, '.',',')}},-</td>
+                        <td>Rp. {{number_format($jr->debit+($jr->debit*11/100), 0, '.',',')}},-</td>
+                        <td>Rp. {{number_format($jr->kredit+($jr->kredit*11/100), 0, '.',',')}},-</td>
                     </tr>
                  @endforeach
                  @endforeach

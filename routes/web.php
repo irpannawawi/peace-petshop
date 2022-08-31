@@ -12,6 +12,7 @@ use \App\Http\Controllers\TransaksiController;
 use \App\Http\Controllers\JadwalController;
 use \App\Http\Controllers\LaporanController;
 use \App\Http\Controllers\AkunController;
+use \App\Http\Controllers\DiskonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,13 +62,6 @@ Route::middleware('role:admin,staf,owner')->group(function(){
     Route::post('/admin/pengguna/edit', [UserController::class, 'update_user']);
     Route::get('/admin/pengguna/hapus/{id}', [UserController::class, 'delete_user']);
 
-    // master data staf
-    Route::get('/staf', [StafController::class, 'index'])->name('staf');
-    Route::post('/staf/insert', [StafController::class, 'insert_staf'])->name('staf-insert');
-    Route::post('/staf/update', [StafController::class, 'update_staf'])->name('staf-update');
-    Route::get('/staf/delete/{id}', [StafController::class, 'delete_staf'])->name('staf-update');
-
-
     // master data customer
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer');
     Route::post('/customer/insert', [CustomerController::class, 'insert_customer'])->name('customer-insert');
@@ -86,6 +80,12 @@ Route::middleware('role:admin,staf,owner')->group(function(){
     Route::post('/produk/insert', [ProdukController::class, 'insert_produk'])->name('produk-insert');
     Route::post('/produk/update', [ProdukController::class, 'update_produk'])->name('produk-update');
     Route::get('/produk/delete/{id}', [ProdukController::class, 'delete_produk'])->name('produk-update');
+
+    // master Diskon
+    Route::get('/diskon', [DiskonController::class, 'index'])->name('diskon');
+    Route::post('/diskon/insert', [DiskonController::class, 'insert_diskon'])->name('diskon-insert');
+    Route::post('/diskon/update', [DiskonController::class, 'update_diskon'])->name('diskon-update');
+    Route::get('/diskon/delete/{id}', [DiskonController::class, 'delete_diskon'])->name('diskon-update');
 
 
     // transaksi

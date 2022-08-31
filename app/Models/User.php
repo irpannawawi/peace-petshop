@@ -24,7 +24,6 @@ class User extends Authenticatable
         'password',
         'role',
         'kd_cust',
-        'kd_staf'
     ];
     public $timestamps = false;
     /**
@@ -46,9 +45,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function staf(){
-        return $this->hasOne(Staf::class, 'kd_staf', 'kd_staf');
-    }
+
     public function customer(){
         return $this->hasOne(Customer::class, 'kd_cust', 'kd_cust');
     }

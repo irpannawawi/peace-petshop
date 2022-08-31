@@ -49,7 +49,7 @@
             <span>Beranda</span></a>
             </li>
             <li class="nav-item">
-                @if (Auth::user()->role == 'admin' OR Auth::user()->role == 'owner')
+                @if (Auth::user()->role == 'admin')
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder-open"></i>
@@ -58,15 +58,15 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item fas fa-arrow-circle-right" href="/admin/pengguna"> Master User</a>
-                        <a class="collapse-item fas fa-arrow-circle-right" href="{{ route('staf') }}"> Data Staf</a>
                         <a class="collapse-item fas fa-arrow-circle-right" href="{{ route('customer') }}"> Data customer</a>
                         <a class="collapse-item fas fa-arrow-circle-right" href="{{ route('akun') }}"> Data Akun</a>
                         <a class="collapse-item fas fa-arrow-circle-right" href="{{ route('produk') }}"> Data Produk Penjualan</a>
+                        <a class="collapse-item fas fa-arrow-circle-right" href="{{ route('diskon') }}"> Diskon</a>
                     </div>
                 </div>
                 @endif
             </li>
-            @if (in_array(Auth::user()->role, array('staf'))) 
+            @if (in_array(Auth::user()->role, array('admin'))) 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1"
                     aria-expanded="true" aria-controls="collapsePages1">
@@ -133,17 +133,6 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    @if (Auth::user()->role == 'customer')
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <div class="input-group-append">
-                                <h4>Menjual Produk Makanan dan Jasa Perawatan Hewan</h4>
-                            </div>
-                        </div>
-                    </form>
-                    @endif
 
                     @if (Auth::user()->role == 'admin')
                     <form
@@ -283,6 +272,8 @@
     <script src="/asset/js/demo/chart-area-demo.js"></script>
     <script src="/asset/js/demo/chart-pie-demo.js"></script>
     <script src="/asset/js/demo/datatables-demo.js"></script>
+
+    @yield('extra-js')
 </body>
 
 </html>

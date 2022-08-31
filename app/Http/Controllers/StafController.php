@@ -14,7 +14,7 @@ class StafController extends Controller
     // 
     public function index()
     {
-        $data['stafs'] = User::where('role','staf')->get();
+        $data['stafs'] = User::where('role','admin')->get();
         return view('admin.staf', $data);
     }
 
@@ -24,7 +24,7 @@ class StafController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-        $userData['role'] = 'staf';
+        $userData['role'] = 'admin';
         
 
         if($userData['password'] !== $request->input('confirm_password')){

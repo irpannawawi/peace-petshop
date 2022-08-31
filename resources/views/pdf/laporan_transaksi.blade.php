@@ -73,8 +73,8 @@
         <td>{{$row->kd_produk}}</td>
         <td>{{$row->produk->nama_produk}}</td>
         <td>{{$row->qty}}</td>
-        <td>Rp. {{number_format($row->harga_satuan, 0, '.',',')}},-</td>
-        <td>Rp. {{number_format($row->harga_satuan*$row->qty, 0, '.',',')}},-</td>
+        <td>Rp. {{number_format($row->harga_satuan, 0, '.',',')}},- <small>(+ PPN 11% Rp. {{number_format($row->harga_satuan*11/100, 0, '.',',')}},-)</small></td>
+        <td>Rp. {{number_format($row->harga_satuan*$row->qty+($row->harga_satuan*$row->qty*11/100), 0, '.',',')}},-</td>
         <td>{{$row->tanggal}}</td>
     </tr>
     @endforeach

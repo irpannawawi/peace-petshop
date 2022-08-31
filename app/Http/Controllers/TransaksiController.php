@@ -8,7 +8,7 @@ use \App\Models\Jadwal;
 
 class TransaksiController extends Controller
 {
-    //
+    // method ini digunakan untuk menampilkan halaman transaksi 
     public function index(Request $request)
     {
         if ($request->input('keywords')) {
