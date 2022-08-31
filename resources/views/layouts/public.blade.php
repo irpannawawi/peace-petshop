@@ -72,15 +72,15 @@
                 <div class="d-inline-flex align-items-center">
                     <div class="d-inline-flex flex-column text-center pr-3 border-right">
                         <h6>Jam Buka</h6>
-                        <p class="m-0">8.00AM - 9.00PM</p>
+                        <p class="m-0">08.00 - 21.00 WIB</p>
                     </div>
                     <div class="d-inline-flex flex-column text-center px-3 border-right">
                         <h6>Email Us</h6>
-                        <p class="m-0">info@example.com</p>
+                        <p class="m-0">risfahrahmalia342@gmail.com</p>
                     </div>
                     <div class="d-inline-flex flex-column text-center pl-3">
                         <h6>Call Us</h6>
-                        <p class="m-0">+012 345 6789</p>
+                        <p class="m-0">(0267) 8407444</p>
                     </div>
                 </div>
             </div>
@@ -146,15 +146,15 @@
         <div class="row pt-5">
             <div class="col-lg-4 col-md-12 mb-5">
                 <h1 class="mb-3 display-5 text-capitalize text-white"><span class="text-primary">Peace</span>PetShop</h1>
-                <p class="m-0">Ipsum amet sed vero et lorem stet eos ut, labore sed sed stet sea est ipsum ut. Volup amet ea sanct ipsum, dolore vero lorem no duo eirmod. Eirmod amet ipsum no ipsum lorem clita ut. Ut sed sit lorem ea lorem sed, amet stet sit sea ea diam tempor kasd kasd. Diam nonumy etsit tempor ut sed diam sed et ea</p>
+                <p class="m-0">Menjual Berbagai Kebutuhan Hewan Peliharaan Anda</p>
             </div>
             <div class="col-lg-8 col-md-12">
                 <div class="row">
                     <div class="col-md-4 mb-5">
                         <h5 class="text-primary mb-4">Get In Touch</h5>
-                        <p><i class="fa fa-map-marker-alt mr-2"></i>123 Street, New York, USA</p>
-                        <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
-                        <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
+                        <p><i class="fa fa-map-marker-alt mr-2"></i>Jl. Galuh Mas Raya IV No.15 Ruko Grand Plaza Barat, Karawang, Jawa Barat 41361</p>
+                        <p><i class="fa fa-phone-alt mr-2"></i>(0267) 8407444</p>
+                        <p><i class="fa fa-envelope mr-2"></i>risfahrahmalia342@gmail.com</p>
                         <div class="d-flex justify-content-start mt-4">
                             <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 36px; height: 36px;" href="#"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 36px; height: 36px;" href="#"><i class="fab fa-facebook-f"></i></a>
@@ -194,8 +194,8 @@
         <div class="row">
             <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
                 <p class="m-0 text-white">
-                    &copy; <a class="text-white font-weight-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed by
-                    <a class="text-white font-weight-bold" href="https://htmlcodex.com">HTML Codex</a>
+                    &copy; <a class="text-white font-weight-bold" href="#">peace-petshop.my.id</a>. All Rights Reserved. Designed by
+                    <a class="text-white font-weight-bold" href="https://htmlcodex.com">Risfah Rahmalia</a>
                 </p>
             </div>
             <div class="col-md-6 text-center text-md-right">

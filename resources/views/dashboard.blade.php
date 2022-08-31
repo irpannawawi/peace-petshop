@@ -4,7 +4,7 @@
  <div class="row justify-content-center">
  <div class="col-md-12">
  <div class="card">
- <div class="card-header">Selamat Datang {{ Auth::user()->name }}</div>
+ <div class="card-header">Selamat Datang {{ Auth::user()->role }}</div>
  <div class="card-body">
  @if (session('status'))
  <div class="alert alert-success" role="alert">
