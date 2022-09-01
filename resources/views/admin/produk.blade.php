@@ -93,7 +93,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Deskripsi</label>
-                <textarea name="deskripsi" >{{old('deskripsi')}}</textarea>
+                <textarea name="deskripsi"  id="editor2">{{old('deskripsi')}}</textarea>
             </div>
 
             <div class="form-group">
@@ -204,6 +204,16 @@
         .then(editor => {
             window.editor = editor;
             descEditor = editor;
+        })
+        .catch( error => {
+            console.error( error );
+        } );
+    let descEditor2;
+    ClassicEditor
+        .create( document.querySelector( '#editor2' ) )
+        .then(editor => {
+            window.editor = editor;
+            descEditor2 = editor;
         })
         .catch( error => {
             console.error( error );
