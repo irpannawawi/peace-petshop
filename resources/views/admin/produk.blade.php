@@ -83,7 +83,7 @@
          enctype="multipart/form-data">
          @csrf
          <div class="modal-header">
-             <h4 class="modal-title">Tambah Data Staf</h4>
+             <h4 class="modal-title">Tambah Data Produk</h4>
          </div>
          <div class="modal-body">
             <div class="form-group">
