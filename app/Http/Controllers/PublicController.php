@@ -13,9 +13,11 @@ use App\Models\User;
 use App\Models\Akun;
 use App\Models\Jurnal;
 use App\Models\Diskon;
+use App\Models\Pajak;
 
 class PublicController extends Controller
 {
+
     //
     public function index(Request $request)
     {
@@ -29,6 +31,7 @@ class PublicController extends Controller
 
     public function keranjang(Request $request)
     {
+        $data['tax'] = Pajak::get()[0]->tax;
         $data['keranjang'] = Keranjang::where('kd_cust', Auth::user()->customer->kd_cust)->get();
         $data['diskon'] = Diskon::where('deleted', 0)->orderBy('min_belanja', 'asc')->get();
         return view('customer.keranjang', $data);
@@ -62,6 +65,7 @@ class PublicController extends Controller
         $data['diskon'] = Diskon::where('deleted', 0)->orderBy('min_belanja', 'asc')->get();
         $data['keranjang'] = Keranjang::where('kd_cust', $kd_cust)->get();
         $data['user'] = User::find(Auth::user()->id_user);
+        $data['tax'] = Pajak::get()[0]->tax;
         return view('customer.checkout', $data);
     }
 
@@ -110,6 +114,7 @@ class PublicController extends Controller
                 'bukti_pembayaran' =>'',
                 'status' =>  'menunggu pembayaran',
                 'diskon' => $has_diskon,
+                'tax_id'=>Pajak::orderBy('id_tax', 'desc')->get()[0]->id_tax
             ];
             
             Transaksi::insert($dataTransaksi);
@@ -122,13 +127,14 @@ class PublicController extends Controller
     public function transaksi(Request $request)
     {
         $kd_cust = User::find(Auth::user()->id_user)->customer->kd_cust;
-        $trx = Transaksi::where('kd_cust', $kd_cust)->distinct()->orderBy('invoice', 'desc')->get(['invoice']);
+        $trx = Transaksi::where('kd_cust', $kd_cust)->distinct()->orderBy('kd_transaksi', 'desc')->get(['invoice']);
         $data['invoices']= [];
+
         if($trx->count()>0){
             foreach($trx as $tr)
             {
                 $total_per_item = Transaksi::where('invoice', $tr->invoice)
-                ->select(Db::raw('transaksi.harga_satuan * transaksi.qty + (transaksi.harga_satuan * transaksi.qty * 11 / 100)  as total_harga'))
+                ->select(Db::raw('transaksi.harga_satuan * transaksi.qty  as total_harga'))
                 ->get();
                 $data['invoices'][$tr->invoice] = [
                     'invoice'=>$tr->invoice, 

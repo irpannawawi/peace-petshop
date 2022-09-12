@@ -44,4 +44,8 @@ class Transaksi extends Model
     {
         return $this->hasMany(Jurnal::class, 'kd_transaksi', 'kd_transaksi');
     }
+    public function pajak()
+    {
+        return $this->hasOne(Pajak::class, 'id_tax', 'tax_id');
+    }
 }

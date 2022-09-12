@@ -47,8 +47,8 @@
                         <td>{{$row->kd_produk}}</td>
                         <td>{{$row->produk->nama_produk}}</td>
                         <td>{{$row->qty}}</td>
-                        <td>Rp. {{number_format($row->harga_satuan, 0, '.',',')}},- <small>+ (PPN 11% Rp. {{number_format($row->harga_satuan*11/100, 0, '.',',')}},- )</small> </td>
-                        <td nowrap>Rp. {{number_format($row->harga_satuan*$row->qty+($row->harga_satuan*$row->qty*11/100), 0, '.',',')}},-</td>
+                        <td>Rp. {{number_format($row->harga_satuan, 0, '.',',')}},- <small>+ (PPN {{$row->pajak->tax}}% Rp. {{number_format($row->harga_satuan*$row->pajak->tax/100, 0, '.',',')}},- )</small> </td>
+                        <td nowrap>Rp. {{number_format($row->harga_satuan*$row->qty+($row->harga_satuan*$row->qty*$row->pajak->tax/100), 0, '.',',')}},-</td>
                         <td>{{$row->tanggal}}</td>
                     </tr>
                  @endforeach

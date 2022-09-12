@@ -16,7 +16,7 @@
 					<div class="btn-group float-right my-auto">
 						@switch ($row['status'])
 							@case ('menunggu pembayaran')
-								<button class="btn btn-secondary"  data-toggle="modal" data-target="#bayar-modal" onclick="fill_id('{{$row['invoice']}}', 'Rp. {{number_format($row['total'], 0, '.',',')}},-', '{{$row['data'][0]->pembayaran}}')">Bayar</button>
+								<button class="btn btn-secondary"  data-toggle="modal" data-target="#bayar-modal" onclick="fill_id('{{$row['invoice']}}', 'Rp. {{number_format($row['total']+($row['total'] * $row['data'][0]->pajak->tax/100), 0, '.',',')}},-', '{{$row['data'][0]->pembayaran}}')">Bayar</button>
 								<a onclick="return confirm('Batalkan pesanan?')" href="{{route('cancel-transaksi', ['inv'=>$row['invoice']])}}" class="btn  btn-danger">Batalkan Pesanan</a>
 							@break
 							@case ('pesanan terkirim')
@@ -44,7 +44,7 @@
 						<li>
 							<b>{{$prd->produk->nama_produk}}</b>
 								<span class="float-right">{{$prd->qty}} x Rp. {{number_format($prd->harga_satuan, 0, '.',',')}},-</span>
-							<p>{{$prd->produk->deskripsi}}</p>
+							<p>@php echo $prd->produk->deskripsi @endphp</p>
 								<hr/>
 							</li>
 							@endforeach
@@ -52,7 +52,7 @@
 						<table class="table table-no-border">
 							<tr>
 								<th>Total</th>
-								<th class="text-right">Rp. {{number_format($row['total'], 0, '.', '.')}},- <small>(Termasuk PPN 11%)</small></th>
+								<th class="text-right">Rp. {{number_format($row['total']+($row['total'] * $prd->pajak->tax/100), 0, '.', '.')}},- <small>(Termasuk PPN {{$prd->pajak->tax}}%)</small></th>
 							</tr>
 						</table>
 					</div>

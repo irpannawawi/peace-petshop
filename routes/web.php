@@ -13,6 +13,7 @@ use \App\Http\Controllers\JadwalController;
 use \App\Http\Controllers\LaporanController;
 use \App\Http\Controllers\AkunController;
 use \App\Http\Controllers\DiskonController;
+use \App\Http\Controllers\PajakController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +81,12 @@ Route::middleware('role:admin,staf,owner')->group(function(){
     Route::post('/produk/insert', [ProdukController::class, 'insert_produk'])->name('produk-insert');
     Route::post('/produk/update', [ProdukController::class, 'update_produk'])->name('produk-update');
     Route::get('/produk/delete/{id}', [ProdukController::class, 'delete_produk'])->name('produk-update');
+
+    // master Pajak
+    Route::get('/pajak', [PajakController::class, 'index'])->name('pajak');
+    Route::post('/pajak/insert', [PajakController::class, 'insert_pajak'])->name('pajak-insert');
+    Route::post('/pajak/update', [PajakController::class, 'update_pajak'])->name('pajak-update');
+    Route::get('/pajak/delete/{id}', [PajakController::class, 'delete_pajak'])->name('pajak-update');
 
     // master Diskon
     Route::get('/diskon', [DiskonController::class, 'index'])->name('diskon');

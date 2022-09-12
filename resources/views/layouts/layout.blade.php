@@ -61,6 +61,7 @@
                         <a class="collapse-item fas fa-arrow-circle-right" href="{{ route('customer') }}"> Data customer</a>
                         <a class="collapse-item fas fa-arrow-circle-right" href="{{ route('akun') }}"> Data Akun</a>
                         <a class="collapse-item fas fa-arrow-circle-right" href="{{ route('produk') }}"> Data Produk Penjualan</a>
+                        <a class="collapse-item fas fa-arrow-circle-right" href="{{ route('pajak') }}"> Pajak</a>
                         <a class="collapse-item fas fa-arrow-circle-right" href="{{ route('diskon') }}"> Diskon</a>
                     </div>
              </div>

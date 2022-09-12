@@ -74,16 +74,16 @@
       <td>{{$row['kd_produk']}}</td>
       <td>{{$row['nama_produk']}}</td>
       <td>{{$row['jumlah']}}</td>
-      <td>Rp. {{number_format($row['harga'], 0, '.',',')}},- (+ PPN 11% Rp. {{number_format($row['harga']*11/100, 0, '.',',')}},-)</td>
-      <td>Rp. {{number_format($row['total']+($row['total']*11/100), 0, '.',',')}},-</td>
+      <td nowrap>Rp. {{number_format($row['harga'], 0, '.',',')}},- <br>(tidak termasuk Pajak, Perlu perhitungan manual)</td>
+      <td nowrap>Rp. {{number_format($row['total'], 0, '.',',')}},-</td>
    </tr>
    @php 
-   $total+=$row['total']+($row['total']*11/100);
+   $total+=$row['total'];
    @endphp
    @endforeach
    <tr>
       <th colspan="5" style="color:white;">Total</th>
-      <td><b>Rp. {{number_format($total, 0, '.',',')}},-</b></td>
+      <td  nowrap><b>Rp. {{number_format($total, 0, '.',',')}},-</b></td>
    </tr>
 </tbody>
 </table>

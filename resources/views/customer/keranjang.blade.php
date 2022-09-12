@@ -74,7 +74,7 @@ $total_bayar=0;
 				@endforeach
 				<tr>
 					<th colspan="3">Jumlah</th>
-					<th>Rp. {{number_format($total_bayar+($total_bayar*11/100), 0, '.',',')}},- <small>(PPN 11%)</small> 
+					<th>Rp. {{number_format($total_bayar+($total_bayar*$tax/100), 0, '.',',')}},- <small>(PPN {{$tax}}%)</small> 
 
 					</th>
 				</tr>
